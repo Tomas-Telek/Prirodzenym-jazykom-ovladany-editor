@@ -20,11 +20,17 @@ const editKeywords = [
 highlightParagraph(currentIndex);
 
 
-const API_KEY = '';
+const apiKeyInput = document.getElementById('apiKey');
+
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const mytext = mytextInput.value.trim();
+    if (/<script|<.*?>/.test(mytext)) {
+        alert("HTML alebo skripty nie sú povolené.");
+        return;
+    }
+
 
 
     if (mytext) {
@@ -85,7 +91,8 @@ form.addEventListener('submit', async (e) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${API_KEY}`,
+                    'Authorization': `Bearer ${apiKeyInput.value.trim()}`,
+                    
                 },
                 body: JSON.stringify({
                     ...requestBody,
@@ -94,14 +101,14 @@ form.addEventListener('submit', async (e) => {
                     n: 1,
                 }),
             });
-
+            input.value = '';
             if (response.ok) {
                 const data = await response.json();
                 const result = data.choices[0].message.content.trim();
                 console.log("Odpoveď od API:", result);
 
                 if (shouldEdit) {
-                    paragraphs[currentIndex].innerText = result;
+                    paragraphs[currentIndex].textContent = result;
                 } else {
                     const index = parseInt(result, 10) - 1;
                     if (!isNaN(index) && index >= 0 && index < paragraphs.length) {
