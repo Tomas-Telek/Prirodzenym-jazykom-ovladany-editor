@@ -101,7 +101,7 @@ form.addEventListener('submit', async (e) => {
                     n: 1,
                 }),
             });
-            input.value = '';
+            apiKeyInput.value = "";
             if (response.ok) {
                 const data = await response.json();
                 const result = data.choices[0].message.content.trim();
