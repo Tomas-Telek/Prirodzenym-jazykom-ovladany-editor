@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prirodzeným jazykom ovládaný editor</title>
+    <style>
+        #editor {
+            width: 90%;
+            height: 400px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        #editor div {
+            padding: 10px;
+        }
+
+        .highlight {
+            background-color: #fdfd73;
+        }
+
+        #mytext {
+            width: 90%;
+            height: 100px;
+        }
+        body {
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>Prirodzeným jazykom ovládaný editor</h1>
+        <form id="form">
+            <label for="mytext">Napíš príkaz v prirodzenom jazyku:</label><br>
+            <textarea id="mytext" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+
+        <div>
+            <h2>Editor:</h2>
+            <div id="editor">
+                <div>O troch prasiatkach</div>
+                <div>Boli raz tri malé prasiatka, ktoré žili na lúke pri lese. Dlhý čas im bolo dobre a nič im
+                    nechýbalo. Až jedného dňa prišlo najmladšie prasiatko so zlou správou. Od múdrej sovy, ktorá vždy
+                    mala o všetkom prehľad, sa dozvedelo, že v okolí sa pohybuje vlk.</div>
+                <div>Obdobie bezstarostného pokoja sa skončilo a prasiatka museli rýchlo vymyslieť, ako sa s tým
+                    vysporiadať. Najlepším riešením bude postaviť domček! Prasiatka sa však nezhodli na tvare domčeka, a
+                    tak sa nakoniec dohodli, že si každé prasiatko jednoducho postaví svoj vlastný. A vo svojich
+                    domčekoch budú pred vlkom v bezpečí.</div>
+                <div>Prvé prasiatko sa do toho pustilo hneď. Snažilo sa však, aby to bolo čo najjednoduchšie. V okamihu
+                    si postavilo slamený domček a hneď sa doň nasťahovalo.</div>
+                <div>Druhé prasiatko, ktoré bolo o kúsok ďalej, si vymyslelo domček z dreva. Pospájať dosky nebude také
+                    náročné a bude z toho pekný domček, hovorilo si. Na druhý deň malo domček hotový.</div>
+                <div>Tretie prasiatko nad domčekom dumalo a dumalo. Najlepší a najbezpečnejší dom bude určite z tehál! A
+                    tak sa pustilo do práce. Skladalo tehlu k tehle a pomaly stavalo pevný dom.</div>
+                <div>Čoskoro, počas jednej zo svojich hladných potuliek, na lúku prišiel vlk. A zbadal ružové prasiatko,
+                    ktoré vchádzalo do slameného domčeka. Prikradol sa teda k domčeku a zavolal na prasiatko, aby mu
+                    otvorilo. Ale nie, prasiatko nebolo také hlúpe, tušilo, kto to asi vonku volá. Vlk sa ešte chvíľu
+                    snažil, ale potom sa rozzúril, nasal vzduch do pľúc a z celej sily fúkol do domčeka. A rozfúkol ho!
+                </div>
+                <div>Vystrašené prasiatko vyskočilo spoza slamy a ponáhľalo sa ostošesť k neďalekému domčeku druhého
+                    prasiatka. Len tak tak to stihlo. Vlk volal na obe prasiatka, aby mu otvorili. Sľuboval, že im
+                    neublíži. Prasiatka však dobre vedeli, že vlk si na ne brúsi zuby a snaží sa ich oklamať. Vlk teda
+                    prestal prosiť a opäť zo všetkých síl fúkol do domčeka. Lenže drevený domček nič. Ten sa nedal
+                    rozfúkať. Vlk teda prešiel o kúsok ďalej, rozbehol sa a celou svojou váhou vrazil do dreveného
+                    domčeka. A drevený dom sa zrútil. </div>
+
+
+                <div>Obe prasiatka sa narýchlo vyhrabali spod trosiek a bežali k domčeku tretieho prasiatka. To práve
+                    pred chvíľou dokončilo stavbu svojho murovaného domčeka s krbom a komínom. Prenasledované prasiatka
+                    sa tam stihli dostať len o fúz. Práve keď zabuchli dvere, zaškrabal na ne vlk. Pokúsil sa trikom
+                    vylákať tri prasiatka von, ale ani teraz sladké reči nezabrali.</div>
+                <div>Nadýchol sa teda a fúkol z plných pľúc. Domček sa ani nepohol. Išiel trochu ďalej, rozbehol sa a zo
+                    všetkou silou vrazil do steny. Ale len si narazil ňufák a s domčekom to ani nepohlo. Dve prasiatka
+                    zo zbúraných domčekov sa v domčeku tretieho prasiatka triasli ako osiky. Ale tretie, najmladšie
+                    prasiatko ich upokojovalo, že vlk sa dovnútra nedostane. Domček je pevný a bezpečný.</div>
+                <div>Ale nebol by to vlk, keby nevymyslel nejaký zákerný plán! Rozhodol sa, že sa vyškriabe po stene až
+                    na strechu a do domu vkĺzne cez komín. Keď sa škriabal na komín, tretie prasiatko pochopilo, čo má
+                    vlk za lubom. Rozpálilo v krbe oheň, a keď sa vlk pokúsil vkĺznuť dnu komínom, tak veľmi sa popálil,
+                    že stratil všetku chuť na prasiatka. Kňučal od bolesti a čo najrýchlejšie sa vydriapal preč. Na
+                    lúke, kde žili prasiatka, sa už nikdy neukázal.</div>
+
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
