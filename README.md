@@ -30,3 +30,7 @@ Do príkazového riadku v aplikácii môžete napísať napríklad:
 
 ##  Požiadavky
 1. Vlastný **OpenAI API kľúč**. Ktorý zadáte na stránke.
+
+
+## Verejná stránka
+> https://prirodzenym-jazykom-ovladany-editor.vercel.app/
