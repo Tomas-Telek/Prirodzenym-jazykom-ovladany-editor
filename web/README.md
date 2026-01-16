@@ -1,102 +1,33 @@
-\# Prirodzeným jazykom ovládaný editor
+## Kľúčové funkcie
+
+### Interaktívne zvýraznenie
+Editor v reálnom čase vizuálne odlišuje odsek, na ktorý sa momentálne sústredíte. Všetky príkazy na úpravu sa aplikujú práve na tento **aktívny blok**.
+
+### Inteligentná editácia (AI)
+Podpora komplexných inštrukcií v slovenčine:
+* **Tvorba a zmena:** *"napíš"*, *"prepíš"*, *"doplň"*, *"nahraď"*,*...*
+* **Mazanie:** *"vymaž"*, *"odstráň"*,*...*
+
+### Smart navigácia
+Editoru môžete zadávať smerové príkazy na presun medzi odsekmi bez použitia myši:
+* **Smer hore:** *"vyššie"*, *"späť"*
+* **Smer dole:** *"ďalší"*, *"dopredu"*
 
 
+## Inštrukcie na použitie
 
-Tento projekt je webová stránka s JavaScriptovým editorom, ktorý umožňuje upravovať text pomocou prirodzeného jazyka a OpenAI API. Užívatelia môžu zadávať príkazy v slovenčine, ako napríklad doplniť, vymazať alebo preformulovať text, a editor podľa toho upraví konkrétny odsek.
-
-
-
----
-
-
-
-\## Funkcie
-
-
-
-\- Zvýraznenie aktuálneho odseku, ktorý sa upravuje.
-
-\- Podpora prirodzeného jazyka pre príkazy, napr.:
-
-&nbsp; - "napíš", "prepíš", "vymaž", "nahraď", "doplň", "odstráň", atď.
-
-\- Presúvanie sa medzi odsekmi pomocou smerových príkazov, ako:
-
-&nbsp; - "vyššie", "späť", "ďalší", "dopredu"
-
-\- Integrácia s OpenAI API (GPT-4o) na úpravu textu podľa používateľských inštrukcií.
-
-\- Zabezpečenie proti zadaniu HTML alebo skriptov v texte (`<script>` a iné HTML tagy nie sú povolené).
-
-
+1. **Otvorenie:** Spustite súbor `index.html` v ľubovoľnom modernom prehliadači.
+2. **Konfigurácia:** Vložte svoj osobný **OpenAI API kľúč** do poľa v hornom paneli.
+3. **Zadanie inštrukcie:** Do príkazového riadku napíšte, čo chcete s textom urobiť (napr. *"Doplň do tohto odseku tri vety o dôležitosti technológií"*).
+4. **Spracovanie:** Po kliknutí na **Submit** AI vyhodnotí typ príkazu:
+    * **Textový príkaz:** Obsah odseku sa okamžite aktualizuje.
+    * **Navigačný príkaz:** Zmení sa fokus (zvýraznenie) na iný odsek.
 
 ---
 
-
-
-\## Štruktúra projektu
-
-
-
-/web ← hlavný priečinok s kódom, ktorý beží na stránke
-
-index.html ← HTML stránka editora
-
-script.js ← JavaScript pre spracovanie príkazov a API volania
-
-README.md ← tento súbor s popisom projektu
-
-
-
-
-
----
-
-
-
-\## Použitie
-
-
-
-1\. Otvorte `index.html` vo webovom prehliadači.
-
-2\. Zadajte svoj OpenAI API kľúč do poľa "Zadaj svoj OpenAI API kľúč".
-
-3\. Do textového poľa napíšte príkaz v prirodzenom jazyku.
-
-4\. Kliknite na \*\*Submit\*\*.  
-
-&nbsp;  - Ak je príkaz úpravou odseku, text sa upraví podľa inštrukcie.
-
-&nbsp;  - Ak je príkaz presun na iný odsek, aktuálne zvýraznený odsek sa zmení.
-
-
-
----
-
-
-
-\## Poznámky
-
-
-
-\- Editor je určený len na testovanie a vzdelávacie účely.
-
-\- Pre správne fungovanie je potrebný platný OpenAI API kľúč.
-
-\- Nepodporuje zadávanie HTML alebo skriptov kvôli bezpečnosti.
-
-
-
----
-
-
-
-\## Autor
-
-
-
-\- Tomas Telek
-
-
-
+## Technické veci
+1. **Detekcia úmyslu (Intent Recognition):** Skript kontroluje vstup používateľa voči zoznamu kľúčových slov (`editKeywords`). Ak príkaz obsahuje slovo ako *"prepíš"* alebo *"doplň"*, aktivuje sa režim úpravy; v opačnom prípade sa príkaz interpretuje ako navigácia.
+2. **Dynamické prepínanie promptov:** Podľa detegovaného úmyslu aplikácia posiela modelu GPT-4o rôzne systémové inštrukcie – buď pre precíznu gramatickú úpravu textu, alebo pre vrátenie číselného indexu nového odseku.
+3. **Správa stavu (DOM State):** Aktuálna poloha v dokumente je sledovaná pomocou premennej `currentIndex`. Funkcia `highlightParagraph` zabezpečuje vizuálnu spätnú väzbu prepínaním CSS triedy `.highlight` na divoch editora.
+4. **Bezpečnostný filter:** Pred odoslaním na API prechádza text Regex kontrolou `/<script|<.*?>/`, ktorá blokuje pokusy o vloženie škodlivého kódu alebo HTML značiek.
+5. **Priama API komunikácia:** Aplikácia využíva `fetch` na asynchrónne volanie OpenAI API s parametrom `temperature: 0`, čo zaručuje deterministické (stále a presné) odpovede potrebné pre navigáciu a opravu textu.
