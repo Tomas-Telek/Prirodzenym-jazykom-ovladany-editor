@@ -3,10 +3,13 @@
 * **AI Framework:** LangChain
 * **Modely:** OpenAI Whisper (Audio), GPT-4o/GPT-3.5 (Text)
 
-## Mozne uprav
+---
+
+## Mozne upravy
 * namiesto whisper-1: https://platform.openai.com/docs/guides/speech-to-text (gpt-4o-transcribe)
 * po whisper skusiť dalsi fetch na gramatiku...
 
+---
 
 ##  Štruktúra projektu a komponenty
 
