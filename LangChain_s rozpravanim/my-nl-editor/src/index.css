@@ -1,0 +1,23 @@
+#editor {
+    width: 90%;
+    height: 400px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+#editor div {
+    padding: 10px;
+}
+
+.highlight {
+    background-color: #fdfd73;
+}
+
+#mytext {
+    width: 90%;
+    height: 100px;
+}
+body {
+    margin: 20px;
+}
