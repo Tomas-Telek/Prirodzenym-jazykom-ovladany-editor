@@ -17,9 +17,9 @@ export async function runNavigateAgent(opts: {
     {
       role: "user",
       content: `Príkaz: "${command}"
-Aktuálny odsek: ${current + 1}
-Počet odsekov: ${total}
-Odpovedz iba číslom.`
+      Aktuálny odsek: ${current + 1}
+      Počet odsekov: ${total}
+      Odpovedz iba číslom.`
     }
   ];
 

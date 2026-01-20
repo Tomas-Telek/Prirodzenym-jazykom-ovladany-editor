@@ -54,6 +54,28 @@ export default function App() {
         }
       }
 
+      else if (res.type === "structure") {
+        const [action, indexStr] = res.value.split("|").map(s => s.trim());
+        const index = parseInt(indexStr);
+
+        if (action === "delete") {
+          const newParagraphs = paragraphs.filter((_, i) => i !== index);
+          setParagraphs(newParagraphs);
+          if (index != 0) setCurrentIndex(index - 1);
+        } 
+        else if (action === "add_after") {
+          const newParagraphs = [...paragraphs];
+          newParagraphs.splice(index + 1, 0, "");
+          setParagraphs(newParagraphs);
+          if (index != 0 && 0 != paragraphs.length) setCurrentIndex(index + 1);
+        } 
+        else if (action === "add_before") {
+          const newParagraphs = [...paragraphs];
+          newParagraphs.splice(index, 0, "");
+          setParagraphs(newParagraphs);
+        }
+      }
+
       setCommand("");
     } catch (err) {
       console.error("Chyba pri volaní agenta:", err);
@@ -80,7 +102,6 @@ export default function App() {
 
       <ApiKeyInput value={apiKey} onChange={setApiKey} />
 
-      {/* SpeechWhisper volá handleSubmitCommand po zastavení nahrávania */}
       <SpeechWhisper apiKey={apiKey} onText={handleSubmitCommand} />
 
       {loading && <div style={{ marginTop: 8 }}>Spracovávam hlas/text… ⏳</div>}
@@ -88,7 +109,7 @@ export default function App() {
       <CommandInput
         command={command}
         onChange={setCommand}
-        onSubmit={handleSubmitForm} // formulár
+        onSubmit={handleSubmitForm}
       />
 
       <EditorView paragraphs={paragraphs} currentIndex={currentIndex} />

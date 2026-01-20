@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import _, { useRef, useState } from "react";
 
 type Props = {
   apiKey: string;
@@ -50,7 +50,19 @@ export default function SpeechWhisper({ apiKey, onText }: Props) {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("model", "whisper-1");
+    //formData.append("model", "whisper-large-v3");
     formData.append("language", "sk");
+
+    /* Using groq
+    const groqApiKey = "";
+    const res = await fetch("https://api.groq.com/openai/v1/audio/transcriptions", {
+      method: "POST",
+      headers: { 
+        Authorization: `Bearer ${groqApiKey}`
+      },
+      body: formData
+    });
+    */
 
     const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
       method: "POST",
@@ -61,6 +73,7 @@ export default function SpeechWhisper({ apiKey, onText }: Props) {
     const data = await res.json();
     return data.text || "";
   }
+
 
   return (
     <div style={{ marginBottom: 12 }}>
