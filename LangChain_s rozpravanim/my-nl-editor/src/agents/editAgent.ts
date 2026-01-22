@@ -7,8 +7,12 @@ export async function runEditAgent(opts: {
 }) {
   const { apiKey, paragraph, command } = opts;
 
-  const system = `Si editor textu. Úlohou je upraviť IBA jeden odsek podľa príkazu.
-Výstup musí byť výhradne nový odsek, bez komentárov, bez poznámok.`;
+const system = `Editor odsekov. Pravidlá:
+  1. Uprav len cieľovú časť podľa inštrukcie. Zvyšok nemeň.
+  2. Ak je vstup len veta bez inštrukcie, pridaj ju na koniec.
+  3. Fixuj gramatiku a nadväznosť.
+  4. Formát: Veľké písmeno na začiatku, bodka na konci vety.
+  5. Výstup: Len čistý opravený text. Žiadne komentáre, úvodzovky ani vysvetlivky.`;
 
   const messages = [
     { role: "system", content: system },
@@ -18,13 +22,7 @@ Výstup musí byť výhradne nový odsek, bez komentárov, bez poznámok.`;
 ${paragraph}
 
 Inštrukcia:
-${command}
-
-Požiadavky:
-- uprav LEN tento odsek
-- gramatika musí byť správna
-- nič nevysvetľuj
-- výstup = čistý text odseku`
+${command}`
     }
   ];
 

@@ -5,12 +5,6 @@
 
 ---
 
-## Mozne upravy
-* namiesto whisper-1: https://platform.openai.com/docs/guides/speech-to-text (gpt-4o-transcribe)
-* po whisper skusiť dalsi fetch na gramatiku...
-
----
-
 ##  Štruktúra projektu a komponenty
 
 ### Vstupná brána

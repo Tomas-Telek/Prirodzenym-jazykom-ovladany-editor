@@ -67,7 +67,7 @@ export default function App() {
           const newParagraphs = [...paragraphs];
           newParagraphs.splice(index + 1, 0, "");
           setParagraphs(newParagraphs);
-          if (index != 0 && 0 != paragraphs.length) setCurrentIndex(index + 1);
+          if (index != 0 || 0 != paragraphs.length) setCurrentIndex(index + 1);
         } 
         else if (action === "add_before") {
           const newParagraphs = [...paragraphs];
