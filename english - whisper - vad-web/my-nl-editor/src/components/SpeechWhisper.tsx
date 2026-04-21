@@ -102,25 +102,25 @@ export default function SpeechWhisper({ apiKey, onText, language, setLivePreview
     };
   }, []);
 
-  const toggleListening = async () => {
-      if (!vadRef.current) return;
-      
-      if (isListening) {
-        await vadRef.current.pause();
-        setIsListening(false);
-      } else {
-        try {
-          // EXPLICITNÁ ŽIADOSŤ - toto prinúti prehliadač ukázať popup
-          await navigator.mediaDevices.getUserMedia({ audio: true });
-          
-          await vadRef.current.start();
-          setIsListening(true);
-        } catch (err) {
-          console.error("Nepodarilo sa získať prístup k mikrofónu:", err);
-          alert(language === 'sk' ? "Povoľte mikrofón v nastaveniach prehliadača." : "Please allow microphone access.");
-        }
-      }
-    };
+   const toggleListening = async () => {
+
+    if (!vadRef.current) return;
+
+    if (isListening) {
+
+      await vadRef.current.pause();
+
+      setIsListening(false);
+
+    } else {
+
+      await vadRef.current.start();
+
+      setIsListening(true);
+
+    }
+
+  }; 
 
   return (
     <div className="voice-control-wrapper">
