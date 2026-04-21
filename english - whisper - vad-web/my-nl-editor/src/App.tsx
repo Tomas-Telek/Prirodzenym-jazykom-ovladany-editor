@@ -26,7 +26,7 @@ export default function App() {
     "From that day on, the two strangers never met—but the forest slowly filled with paper stars, and neither of them ever felt lonely again."
   ]);
 
-  // Všetok stav zhrnutý v Ref, aby naň videli asynchrónne funkcie
+
   const stateRef = useRef({ currentIndex, paragraphs, history_, fontSize, language });
 
   useEffect(() => {
