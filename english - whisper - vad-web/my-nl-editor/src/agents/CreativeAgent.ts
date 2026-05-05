@@ -3,10 +3,12 @@ import { getLCModel, callLC } from "./langchainClient";
 export async function runCreativeAgent(opts: {
   apiKey: string;
   paragraph: string;
+  prevParagraph?: string | null; // Nové
+  nextParagraph?: string | null; // Nové
   command: string;
   language: string;
 }) {
-  const { apiKey, paragraph, command, language } = opts;
+  const { apiKey, paragraph, prevParagraph, nextParagraph, command, language } = opts;
 
   const langName = language === 'sk' ? 'SLOVAK' : 'ENGLISH';
 
@@ -24,11 +26,12 @@ export async function runCreativeAgent(opts: {
     { role: "system", content: system },
     {
       role: "user",
-      content: `Current Paragraph:
-  "${paragraph}"
+      content: `${prevParagraph ? `PREVIOUS PARAGRAPH: "${prevParagraph}"` : ""}
+                CURRENT PARAGRAPH (PARAGRPH to EDIT): "${paragraph}"
+                ${nextParagraph ? `NEXT PARAGRAPH: "${nextParagraph}"` : ""}
 
-  Instruction:
-  ${command}`
+                USER COMMAND:
+                ${command}`
       }
   ];
 

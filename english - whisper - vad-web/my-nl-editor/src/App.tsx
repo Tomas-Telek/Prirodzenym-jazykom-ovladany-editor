@@ -4,7 +4,6 @@ import CommandInput from "./components/CommandInput";
 import EditorView from "./components/EditorView";
 import { runRouterAgent } from "./agents/routerAgent";
 import SpeechWhisper from "./components/SpeechWhisper";
-import jsPDF from "jspdf";
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 
@@ -19,11 +18,7 @@ export default function App() {
   const [language, setLanguage] = useState<'sk' | 'en'>('sk');
 
   const [paragraphs, setParagraphs] = useState<string[]>([
-    "On a quiet hill above a small village lived a boy named Leo who collected lost things.",
-    "Not stolen things. Not broken things. Lost things.",
-    "Every morning, he walked through the forest and picked up whatever he found: a single glove, a rusty key, a ribbon caught in a branch, a marble shining in the dirt. He kept them all in a wooden box under his bed.",
-    "It was a tiny paper star folded carefully from yellow paper. Inside it, someone had written: “If you find this, I hope you’re not lonely.” Leo smiled. He wasn’t lonely anymore. So he folded another star from blue paper and wrote: “You’re not alone either.” Then he left it on the same forest path the next morning.",
-    "From that day on, the two strangers never met—but the forest slowly filled with paper stars, and neither of them ever felt lonely again."
+    ""
   ]);
 
 
@@ -42,6 +37,7 @@ export default function App() {
 
     try {
       setLoading(true);
+      console.log("Transcribed Text:", cmd);
 
       const results = await runRouterAgent({
         apiKey,
@@ -79,39 +75,6 @@ export default function App() {
     setCommand(cmd);
     await handleSubmit(cmd);
   }
-
-  const exportToPDF = () => {
-    const doc = new jsPDF();
-    const removeDiacritics = (text: string) => {
-      return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    };
-    
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(12);
-    
-    let yPosition = 35;
-    const pageHeight = doc.internal.pageSize.height;
-    const margin = 20;
-    const contentWidth = 170;
-    const lineHeight = 7;
-
-    paragraphs.forEach((para) => {
-      const cleanText = removeDiacritics(para); 
-      const lines: string[] = doc.splitTextToSize(cleanText, contentWidth);
-      
-      lines.forEach(line => {
-        if (yPosition > pageHeight - 20) {
-          doc.addPage();
-          yPosition = 20;
-        }
-        doc.text(line, margin, yPosition);
-        yPosition += lineHeight;
-      });
-      yPosition += 5;
-    });
-
-    doc.save("dokument.pdf");
-  };
 
   const handleManualEdit = (index: number, newText: string) => {
     setParagraphs(prev => {
@@ -192,15 +155,6 @@ export default function App() {
         )}
       </div>
 
-      <button 
-        onClick={exportToPDF}
-        style={{
-          padding: '8px 16px', backgroundColor: '#10b981', color: 'white', border: 'none',
-          borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', marginLeft: 'auto' 
-        }}
-      >
-        {language === 'sk' ? 'Exportovať do PDF' : 'Export to PDF'}
-      </button>
       <main className="editor-workspace" style={{ width: '100%' }}>
         <EditorView 
           paragraphs={paragraphs} 

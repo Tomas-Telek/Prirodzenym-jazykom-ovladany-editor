@@ -24,6 +24,8 @@ export default function SpeechWhisper({ apiKey, onText, language, setLivePreview
     if (!apiKeyRef.current) return;
 
     queueRef.current = queueRef.current.then(async () => {
+
+      const totalStart = performance.now();
     
       const currentLang = langRef.current;
       const currentOnText = onTextRef.current;
@@ -40,9 +42,10 @@ export default function SpeechWhisper({ apiKey, onText, language, setLivePreview
       const formData = new FormData();
       formData.append("file", audioBlob, "audio.wav");
       formData.append("model", "whisper-1");
-      formData.append("language", currentLang); // Aktuálny jazyk pre OpenAI
+      formData.append("language", currentLang); 
 
       try {
+        const sttStart = performance.now();
         const response = await fetch("https://api.openai.com/v1/audio/transcriptions", {
           method: "POST",
           headers: { "Authorization": `Bearer ${currentApiKey}` },
@@ -50,9 +53,16 @@ export default function SpeechWhisper({ apiKey, onText, language, setLivePreview
         });
         const data = await response.json();
 
+        const sttEnd = performance.now();
+
+        const sttDuration = Math.round(sttEnd - sttStart);
+
         if (data.text && data.text.trim().length > 0) {
-      
+
           await currentOnText(data.text); 
+
+          const totalDuration = Math.round(performance.now() - totalStart);
+          console.log(`Transcription: "${data.text}" (STT: ${sttDuration}ms, Total: ${totalDuration}ms)`);
         }
       } catch (err) {
         console.error("Whisper Error:", err);
