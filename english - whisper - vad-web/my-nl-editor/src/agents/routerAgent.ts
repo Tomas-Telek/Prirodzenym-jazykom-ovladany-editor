@@ -81,7 +81,7 @@ export async function runRouterAgent(opts: {
                   If the command is complex, break it down into multiple steps. 
                   Like if the command is reffering to a different paragraph, first navigate to it, then edit.
                   If command has multiplicity like 5 times do undo then plan 5 times to undo.
-                  if the user is reffering to a rnage of paragrafs like "all" than plan to do it on all paragrafs one by one.
+                  if the user is reffering to a rnage of paragrafs like "all" than plan to do it on all paragrafs one by one combinating navigation and the task required.
                   `;
 
 
