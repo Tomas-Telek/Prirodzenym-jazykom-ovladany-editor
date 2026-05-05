@@ -28,7 +28,7 @@ export async function runRouterAgent(opts: {
           "edit", "creative", "navigate", "structure", "undo", "font", "dictate","savePDF"
         ]).describe(`
           - edit: Modifying existing text (grammar, tone, translation).
-          - creative: New content, poems, metaphors, or story continuation.
+          - creative: New content, poems, metaphors, or story continuation, or adding information to text.
           - navigate: Moving between paragraphs.
           - structure: Creating or deleting entire paragraphs.
           - undo: Reverting the last action.
