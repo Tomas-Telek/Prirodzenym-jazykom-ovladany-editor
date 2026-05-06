@@ -27,7 +27,7 @@ export async function runRouterAgent(opts: {
         category: z.enum([
           "edit", "creative", "navigate", "structure", "undo", "font", "dictate","savePDF"
         ]).describe(`
-          - edit: Modifying existing text (grammar, tone, translation).
+          - edit: Modifying existing text (grammar, tone, translation, empty the paragraph).
           - creative: New content, poems, metaphors, or story continuation, or adding information to text.
           - navigate: Moving between paragraphs.
           - structure: Creating or deleting entire paragraphs.

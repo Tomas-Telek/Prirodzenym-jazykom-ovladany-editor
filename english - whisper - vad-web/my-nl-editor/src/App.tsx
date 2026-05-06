@@ -18,7 +18,9 @@ export default function App() {
   const [language, setLanguage] = useState<'sk' | 'en'>('sk');
 
   const [paragraphs, setParagraphs] = useState<string[]>([
-    ""
+    "Welcome to the next generation of digital writing. This AI-native text editor is designed to bridge the gap between human thought and digital execution through the power of natural language.",
+    "By leveraging an advanced multi-agent architecture, the system acts as a proactive co-author. It can restructure your ideas, refine your tone, and navigate through complex documents without a single mouse click.",
+    "Try giving a voice command now, such as 'Make the first paragraph more professional' or 'Generate a creative summary of this text'."
   ]);
 
 
