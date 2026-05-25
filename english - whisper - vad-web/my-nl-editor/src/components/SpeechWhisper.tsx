@@ -140,9 +140,9 @@ export default function SpeechWhisper({ apiKey, onText, language, setLivePreview
       >
         <span>{isListening ? '⏹' : '🎤'}</span>
         {isListening ? (
-          language === 'sk' ? ' Zastav AI poslúchanie' : ' Stop AI Listening'
+          language === 'sk' ? ' Zastav AI počúvanie' : ' Stop AI Listening'
         ) : (
-          language === 'sk' ? ' Začni AI poslúchanie' : ' Start AI Listening'
+          language === 'sk' ? ' Začni AI počúvanie' : ' Start AI Listening'
         )}
       </button>
 
