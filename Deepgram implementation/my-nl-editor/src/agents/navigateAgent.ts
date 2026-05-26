@@ -12,16 +12,6 @@ export async function runNavigateAgent(opts: {
 
   const system = `Si navigačný agent. Odpovedáš JEDNÝM číslom 1..${total}.`;
 
-  // const system = `You are a Navigation Agent for a document with ${total} paragraphs.
-  // Based on the user's command, determine the index of the target paragraph.
-  
-  // RULES:
-  // - Return ONLY a single integer between 0 and ${total - 1}.
-  // - If the user says "next", return ${current + 1} (max ${total - 1}).
-  // - If the user says "previous", return ${current - 1} (min 0).
-  // - If the command is unclear, return the current index: ${current}.
-  // - NO text, NO explanations, ONLY the number.`;
-
   const messages = [
     { role: "system", content: system },
     {

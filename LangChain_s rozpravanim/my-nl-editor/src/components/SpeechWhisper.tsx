@@ -45,7 +45,6 @@ export default function SpeechWhisper({ apiKey, onText }: Props) {
     setRecording(false);
   }
 
-  // skusk nob´ve modeli z open ai dokumentacie
   async function sendToWhisper(file: File): Promise<string> {
     const formData = new FormData();
     formData.append("file", file);
@@ -76,12 +75,31 @@ export default function SpeechWhisper({ apiKey, onText }: Props) {
 
 
   return (
-    <div style={{ marginBottom: 12 }}>
-      <button onClick={recording ? stopRecording : startRecording}>
-        {recording ? "⏹ Stop" : "🎤 Nahrať hlas (Whisper)"}
+    <div className="voice-control-wrapper">
+      <button 
+        onClick={recording ? stopRecording : startRecording}
+        className={`record-button ${recording ? 'recording' : 'idle'}`}
+      >
+        {recording ? (
+          <><span>⏹</span> Zastaviť</>
+        ) : (
+          <><span>🎤</span> Nahrať hlasový príkaz</>
+        )}
       </button>
-      {recording && <span style={{ marginLeft: 10 }}>Nahrávam… 🔴</span>}
-      {loading && <span style={{ marginLeft: 10 }}>Spracovávam… ⏳</span>}
+
+      <div className="status-area">
+        {recording && (
+          <span className="status-text" style={{ color: '#ef4444' }}>
+            Hlasový vstup aktívny... 🔴
+          </span>
+        )}
+        
+        {loading && (
+          <span className="status-text">
+            <span className="loader-spin">⏳</span> AI analyzuje vašu reč...
+          </span>
+        )}
+      </div>
     </div>
   );
 }

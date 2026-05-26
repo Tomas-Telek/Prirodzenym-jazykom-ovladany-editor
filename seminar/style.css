@@ -494,3 +494,16 @@ a:hover {
     font-size: 13px;
     color: var(--muted);
 }
+
+
+
+
+/* Samotný obrázok */
+.screenshot-img-fixed {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* KRITICKÉ: Zachová pomer strán a vyplní plochu (oreže kraje) */
+  object-position: top; /* Zarovná obrázok na vrch (aby bolo vidieť menu/lišty) */
+  display: block;
+  transition: transform 0.3s ease;
+}

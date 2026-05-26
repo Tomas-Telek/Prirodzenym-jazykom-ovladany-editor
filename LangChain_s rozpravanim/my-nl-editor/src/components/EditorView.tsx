@@ -1,4 +1,5 @@
 import React from "react";
+import "../index.css";
 
 type Props = {
   paragraphs: string[];
@@ -7,19 +8,22 @@ type Props = {
 
 export default function EditorView({ paragraphs, currentIndex }: Props) {
   return (
-    <div>
-      <h2>Editor</h2>
-      <div style={{ width: "90%", border: "1px solid #ccc", padding: 10 }}>
+    <div className="editor-container">
+      <h2 style={{ marginBottom: "24px", fontWeight: 700 }}>Text Editor: </h2>
+      
+      <div className="blocks-wrapper">
         {paragraphs.map((p, i) => (
           <div
             key={i}
-            style={{
-              padding: 8,
-              marginBottom: 6,
-              background: i === currentIndex ? "#ffffa0" : "transparent"
-            }}
+            className={`paragraph-block ${i === currentIndex ? "active" : ""}`}
           >
-            {p}
+            <span className="paragraph-number">{i + 1}</span>
+            
+            {p ? (
+              p
+            ) : (
+              <span className="empty-placeholder">Prázdni odsek...</span>
+            )}
           </div>
         ))}
       </div>

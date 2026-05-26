@@ -10,8 +10,11 @@ export async function runRouterAgent(opts: {
   paragraphs: string[];
   currentIndex: number;
   history_: string[][];
+  fontSize: number;
 }) {
-  const { apiKey, command, paragraphs, currentIndex, history_ } = opts;
+  const { apiKey, command, paragraphs, currentIndex, history_, fontSize } = opts;
+  console.log("Initial state:", {currentIndex});
+
   const model = getLCModel(apiKey);
   const parser = new JsonOutputParser();
 
@@ -25,6 +28,8 @@ export async function runRouterAgent(opts: {
   2. "navigate": Moving between paragraphs (e.g., go to next, go to the beginning, jump to paragraph 5).
   3. "structure": Creating or deleting entire paragraphs (e.g., add new block below, delete this).
   4. "undo": Reverting the last action (e.g., "vráť to späť", "zruš to", "undo", "vráť poslednú zmenu").
+  5. "fontUP": Increase font size of the current paragraph.
+  6. "fontDOWN": Decrease font size of the current paragraph.
 
   RULES:
   - CONTEXT AWARENESS: You are given the 'Current Index' (0-based) and the user's command.
@@ -37,7 +42,7 @@ export async function runRouterAgent(opts: {
   {
     "tasks": [
       {
-        "category": "edit" | "navigate" | "structure" | "undo",
+        "category": "edit" | "navigate" | "structure" | "undo" | "fontUP" | "fontDOWN",
         "cleanCommand": "corrected Slovak instruction",
       }
     ]
@@ -52,13 +57,15 @@ export async function runRouterAgent(opts: {
 
   const decision = await chain.invoke(messages);
 
-  const results = [];
+  console.log("Router OUT:", decision);
 
   let updatedParagraphs = [...paragraphs];
   let updatedIndex = currentIndex;
   let updatedHistory = [...history_];
+  let updatedFontSize = fontSize;
 
   for (const task of decision.tasks) {
+
 
     if (task.category === "undo") {
       if (updatedHistory.length > 0) {
@@ -80,7 +87,7 @@ export async function runRouterAgent(opts: {
             current: updatedIndex
           });
           updatedIndex = structureAction.index;
-          const { action, index } = structureAction.value; 
+          const { action, index } = structureAction; 
                     if (action === "delete") {
             updatedParagraphs = updatedParagraphs.filter((_, i) => i !== index);
             updatedIndex = Math.max(0, index - 1);
@@ -101,12 +108,12 @@ export async function runRouterAgent(opts: {
 
 
     if (task.category === "edit") {
-      console.log("Router OUT:", task.cleanCommand);
       const updated = await runEditAgent({
         apiKey,
         paragraph: updatedParagraphs[updatedIndex],
         command: task.cleanCommand
       });
+      console.log("Edit OUT:", currentIndex, updatedIndex);
       updatedParagraphs[updatedIndex] = updated;
       continue;
     } 
@@ -125,12 +132,21 @@ export async function runRouterAgent(opts: {
         }
       continue;
     }
+    if (task.category === "fontUP") {
+      updatedFontSize += 2;
+    }
+    if (task.category === "fontDOWN") {
+      updatedFontSize -= 2;
+    }
+
   }
 
 
   return {
     paragraphs: updatedParagraphs,
     currentIndex: updatedIndex,
-    history: updatedHistory
+    history: updatedHistory,
+    fontSize: updatedFontSize
+
   };
 }

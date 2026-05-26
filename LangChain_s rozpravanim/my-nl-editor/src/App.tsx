@@ -10,6 +10,7 @@ export default function App() {
   const [command, setCommand] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
+  const [history_, setHistory] = useState<string[][]>([]);
 
   const [paragraphs, setParagraphs] = useState<string[]>([
     "O troch prasiatkach",
@@ -20,7 +21,8 @@ export default function App() {
     "Tretie prasiatko nad domčekom dumalo a dumalo..."
   ]);
 
-  // --- hlavná funkcia, ktorá spracuje text (z formulára alebo hlasu)
+
+
   async function handleSubmit(cmd: string) {
     if (!apiKey) {
       alert("Zadaj OpenAI API kľúč!");
@@ -31,51 +33,19 @@ export default function App() {
     try {
       setLoading(true);
 
-      const res = await runRouterAgent({
+      const results = await runRouterAgent({
         apiKey,
         command: cmd,
         paragraphs,
-        currentIndex
+        currentIndex,
+        history_
       });
 
-      if (res.type === "edit") {
-        const copy = [...paragraphs];
-        copy[currentIndex] = res.value;
-        setParagraphs(copy);
-      } 
+      setParagraphs(results.paragraphs);
+      setCurrentIndex(results.currentIndex);
+      setHistory(results.history);
+
       
-      else if (res.type === "navigate") {
-        const idx = Number(res.value) - 1;
-        if (!Number.isNaN(idx) && idx >= 0 && idx < paragraphs.length) {
-          setCurrentIndex(idx);
-        } 
-        else {
-          console.warn("Neplatný index z agenta:", res.value);
-        }
-      }
-
-      else if (res.type === "structure") {
-        const [action, indexStr] = res.value.split("|").map(s => s.trim());
-        const index = parseInt(indexStr);
-
-        if (action === "delete") {
-          const newParagraphs = paragraphs.filter((_, i) => i !== index);
-          setParagraphs(newParagraphs);
-          if (index != 0) setCurrentIndex(index - 1);
-        } 
-        else if (action === "add_after") {
-          const newParagraphs = [...paragraphs];
-          newParagraphs.splice(index + 1, 0, "");
-          setParagraphs(newParagraphs);
-          if (index != 0 || 0 != paragraphs.length) setCurrentIndex(index + 1);
-        } 
-        else if (action === "add_before") {
-          const newParagraphs = [...paragraphs];
-          newParagraphs.splice(index, 0, "");
-          setParagraphs(newParagraphs);
-        }
-      }
-
       setCommand("");
     } catch (err) {
       console.error("Chyba pri volaní agenta:", err);
@@ -97,22 +67,37 @@ export default function App() {
   }
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Prirodzeným jazykom ovládaný editor</h1>
+    <div className="app-container">
+      <h1 className="app-title">Prirodzením jazykom ovládaný editor</h1>
+      
 
-      <ApiKeyInput value={apiKey} onChange={setApiKey} />
+      <div className="top-bar">
+        <ApiKeyInput value={apiKey} onChange={setApiKey} />
+        <CommandInput
+          command={command}
+          onChange={setCommand}
+          onSubmit={handleSubmitForm}
+        />
+      </div>
 
-      <SpeechWhisper apiKey={apiKey} onText={handleSubmitCommand} />
+      <div className="main-workspace">
+        
+        <aside className="sidebar-input">
+          <SpeechWhisper apiKey={apiKey} onText={handleSubmitCommand} />
+          
+          {loading && (
+            <div style={{ marginTop: 20, fontSize: '0.8rem', color: '#3b82f6' }}>
+              <span className="loader-spin">⏳</span> AI premýšľa...
+            </div>
+          )}
+        </aside>
+        
 
-      {loading && <div style={{ marginTop: 8 }}>Spracovávam hlas/text… ⏳</div>}
+        <main className="editor-workspace">
+          <EditorView paragraphs={paragraphs} currentIndex={currentIndex} />
+        </main>
 
-      <CommandInput
-        command={command}
-        onChange={setCommand}
-        onSubmit={handleSubmitForm}
-      />
-
-      <EditorView paragraphs={paragraphs} currentIndex={currentIndex} />
+      </div>
     </div>
   );
 }

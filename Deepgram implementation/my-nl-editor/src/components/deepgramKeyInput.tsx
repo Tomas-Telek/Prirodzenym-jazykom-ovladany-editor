@@ -1,19 +1,18 @@
-import React from "react";
 type Props = {
   value: string;
   onChange: (v: string) => void;
 };
 
-export default function ApiKeyInput({ value, onChange }: Props) {
+export default function DeepgramApiKeyInput({ value, onChange }: Props) {
   return (
     <div className="api-key-container">
       <label className="api-key-label">
-        <span>🔐</span> OpenAI API Key:
+        <span>🔐</span> Deepgram API Key:
       </label>
       <input
         type="password"
         className="api-key-input"
-        placeholder="sk-xxxxxxxxxxxxxxxxxxxxxxxx"
+        placeholder="xxxxxxxxxxxxxxxxxxxxx"
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />

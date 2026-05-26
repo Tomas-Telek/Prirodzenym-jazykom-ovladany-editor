@@ -1,4 +1,3 @@
-import React from "react";
 type Props = {
   value: string;
   onChange: (v: string) => void;
